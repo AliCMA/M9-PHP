@@ -1,0 +1,51 @@
+version: '3.8'
+services:
+  php:
+    image: php:8.1-fpm
+    build:
+      dockerfile: ./docker/php/dockerfile
+      context: .
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - php
+    networks:
+      - app-network
+
+  mariadb:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ali5715
+      MYSQL_DATABASE: newsletter
+      MYSQL_USER: ali
+      MYSQL_PASSWORD: ali5715
+    ports:
+      - 4007:3306
+    networks:
+      - app-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: root
+      PMA_PASSWORD: ali5715
+    ports:
+      - "8080:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+    

@@ -1,0 +1,17 @@
+{
+    "name": "mehza/newsletter-api-master",
+    "autoload": {
+        "psr-4": {
+            "Mehza\\NewsletterApiMaster\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "AliCMA",
+            "email": "32778@ma-web.nl"
+        }
+    ],
+    "require": {
+        "symfony/mailer": "*"
+    }
+}
